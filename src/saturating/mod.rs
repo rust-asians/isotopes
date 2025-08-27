@@ -1,5 +1,6 @@
 pub mod saturating_operators;
 
+#[derive(Eq, PartialEq, Ord, PartialOrd, Copy, Clone, Debug, Default)]
 pub struct Saturating<T>(T);
 
 impl<T> Saturating<T> {
