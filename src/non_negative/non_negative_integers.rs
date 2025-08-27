@@ -1,4 +1,4 @@
-use std::ops::{Add, Div, Mul, Sub};
+use std::ops::{Add, Div, Mul};
 use crate::non_negative::non_negative_operator::non_negative_operator;
 
 macro_rules! non_negative_integer {
