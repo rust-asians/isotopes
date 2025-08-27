@@ -1,6 +1,11 @@
 [package]
-name = "units"
+name = "isotopes"
 version = "0.1.0"
 edition = "2024"
+license = "MIT"
+description = "Variants of common types for enforcing invariance."
+homepage = "https://github.com/thebrownfoxx/isotopes"
+repository = "https://github.com/thebrownfoxx/isotopes"
+readme = "README.md"
 
 [dependencies]
