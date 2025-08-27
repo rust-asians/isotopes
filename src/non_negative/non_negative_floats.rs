@@ -1,4 +1,4 @@
-use crate::non_zero::non_zero_operator::non_negative_operator;
+use crate::non_negative::non_negative_operator::non_negative_operator;
 use std::ops::{Add, Div, Mul};
 
 macro_rules! non_negative_float {
