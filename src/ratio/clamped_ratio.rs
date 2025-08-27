@@ -1,5 +1,19 @@
 use crate::bound::bound_error::BoundError;
 use crate::bound::min_max::{Max, Min};
+use crate::checked::checked_operators::{CheckedAdd, CheckedDiv, CheckedMul, CheckedSub};
+use std::ops::{Add, Div, Mul, Sub};
+
+macro_rules! clamped_ratio_checked_operator {
+    ($type_name: ident, $trait_name: ident, $function_name: ident, $operator_name: ident) => {
+        impl $trait_name for $type_name {
+            type Error = BoundError;
+
+            fn $function_name(self, rhs: $type_name) -> Result<Self, BoundError> {
+                Self::new(self.get().$operator_name(rhs.get()))
+            }
+        }
+    };
+}
 
 macro_rules! clamped_ratio {
     ($type_name: ident, $inner_type: ty) => {
@@ -47,6 +61,11 @@ macro_rules! clamped_ratio {
                 Self::one()
             }
         }
+
+        clamped_ratio_checked_operator!($type_name, CheckedAdd, checked_add, add);
+        clamped_ratio_checked_operator!($type_name, CheckedSub, checked_sub, sub);
+        clamped_ratio_checked_operator!($type_name, CheckedMul, checked_mul, mul);
+        clamped_ratio_checked_operator!($type_name, CheckedDiv, checked_div, div);
     };
 }
 
