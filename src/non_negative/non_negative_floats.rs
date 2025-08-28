@@ -1,5 +1,7 @@
 use crate::bound::bound_error::BoundError;
+use crate::bound::min_max::{Max, Min};
 use crate::checked::checked_operators::{CheckedAdd, CheckedDiv, CheckedMul, CheckedSub};
+use crate::non_negative::non_negative_min_max::non_negative_min_max;
 use crate::non_negative::non_negative_operator::non_negative_operator;
 use crate::non_negative::non_negative_operator::non_negative_operators;
 use std::ops::{Add, Div, Mul};
@@ -57,7 +59,8 @@ macro_rules! non_negative_float {
                 self.0
             }
         }
-
+        
+        non_negative_min_max!($name);
         non_negative_operators!($name);
         non_negative_float_checked_operators!($name);
     };
