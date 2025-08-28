@@ -10,4 +10,13 @@ macro_rules! non_negative_operator {
     };
 }
 
+macro_rules! non_negative_operators {
+    ($type_name: ident) => {
+        non_negative_operator!($type_name, Add, add);
+        non_negative_operator!($type_name, Mul, mul);
+        non_negative_operator!($type_name, Div, div);
+    };
+}
+
 pub(super) use non_negative_operator;
+pub(super) use non_negative_operators;

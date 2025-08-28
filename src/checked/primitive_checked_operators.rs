@@ -1,5 +1,4 @@
 use crate::bound::bound_error::BoundError;
-use crate::bound::bound_error::BoundError::{Overflow, Underflow};
 use crate::bound::min_max::Min;
 use crate::checked::checked_operators::{CheckedAdd, CheckedDiv, CheckedMul, CheckedSub};
 
@@ -17,9 +16,9 @@ macro_rules! primitive_checked_operator {
             fn $function_name(self, rhs: Self) -> Result<Self, Self::Error> {
                 let error = || {
                     if self.$saturating_operator_name(rhs) == Min::min() {
-                        Underflow
+                        BoundError::Underflow
                     } else {
-                        Overflow
+                        BoundError::Overflow
                     }
                 };
 

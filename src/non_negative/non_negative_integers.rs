@@ -1,5 +1,30 @@
+use crate::bound::bound_error::BoundError;
+use crate::bound::min_max::{Max, Min};
+use crate::checked::checked_operators::{CheckedAdd, CheckedDiv, CheckedMul, CheckedSub};
+use crate::non_negative::non_negative_operator::{non_negative_operator, non_negative_operators};
 use std::ops::{Add, Div, Mul};
-use crate::non_negative::non_negative_operator::non_negative_operator;
+
+macro_rules! non_negative_integer_checked_operator {
+    ($type_name: ident, $trait_name: ident, $function_name: ident) => {
+        impl $trait_name for $type_name {
+            type Error = BoundError;
+
+            fn $function_name(self, rhs: $type_name) -> Result<Self, BoundError> {
+                Self::new($trait_name::$function_name(self.get(), rhs.get())?)
+                    .ok_or(BoundError::Underflow)
+            }
+        }
+    };
+}
+
+macro_rules! non_negative_integer_checked_operators {
+    ($type_name: ident) => {
+        non_negative_integer_checked_operator!($type_name, CheckedAdd, checked_add);
+        non_negative_integer_checked_operator!($type_name, CheckedSub, checked_sub);
+        non_negative_integer_checked_operator!($type_name, CheckedMul, checked_mul);
+        non_negative_integer_checked_operator!($type_name, CheckedDiv, checked_div);
+    };
+}
 
 macro_rules! non_negative_integer {
     ($name: ident, $inner_type: ty) => {
@@ -14,6 +39,13 @@ macro_rules! non_negative_integer {
                 Self(value)
             }
 
+            pub fn new(value: $inner_type) -> Option<Self> {
+                match value {
+                    0.. => Some(unsafe { Self::new_unchecked(value) }),
+                    _ => None,
+                }
+            }
+
             pub fn zero() -> Self {
                 unsafe { Self::new_unchecked(0) }
             }
@@ -22,21 +54,25 @@ macro_rules! non_negative_integer {
                 unsafe { Self::new_unchecked(1) }
             }
 
-            pub fn new(value: $inner_type) -> Option<Self> {
-                match value {
-                    0.. => Some(unsafe { Self::new_unchecked(value) }),
-                    _ => None,
-                }
-            }
-
             pub fn get(self) -> $inner_type {
                 self.0
             }
         }
 
-        non_negative_operator!($name, Add, add);
-        non_negative_operator!($name, Mul, mul);
-        non_negative_operator!($name, Div, div);
+        impl Min for $name {
+            fn min() -> Self {
+                Self::zero()
+            }
+        }
+
+        impl Max for $name {
+            fn max() -> Self {
+                unsafe { Self::new_unchecked(Max::max()) }
+            }
+        }
+
+        non_negative_operators!($name);
+        non_negative_integer_checked_operators!($name);
     };
 }
 

@@ -6,11 +6,9 @@ Variants of common types for enforcing invariance.
 
 ## Types
 
-### Non-negative types
+### Non-negative
 
 Types that cannot go under `0`. They implement `Add<Self>`, `Mul<Self>`, and `Div<Self>` that just do exactly what their underlying types do. `Sub` was not implemented, since underflowing is extremely easy to accidentally do.
-
-> [WIP] [Checked operator traits](#checked-operator-traits) will be implemented for these types.
 
 - `NonNegativeU8` - `NonNegativeU128`, `NonNegativeUsize`
 - `NonNegativeI8` - `NonNegativeI128`, `NonNegativeIsize`
