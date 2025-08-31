@@ -32,8 +32,8 @@ the [checked operator](#checked-operator-traits) and [bound](#bound-traits) trai
 
 ### Bound traits
 
-- Min
-- Max
+- `Min`
+- `Max`
 
 These just provide a standard way of defining the upper and lower limits of a type.
 
