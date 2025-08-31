@@ -1,14 +1,14 @@
 use crate::bound::bound_error::BoundError;
 use crate::bound::min_max::{Max, Min};
 use crate::checked::checked_operators::{CheckedAdd, CheckedDiv, CheckedMul, CheckedSub};
-use crate::non_negative::non_negative_checked_operators::{
-    non_negative_checked_operator, non_negative_checked_operators,
+use crate::unsigned::unsigned_checked_operators::{
+    unsigned_checked_operator, unsigned_checked_operators,
 };
-use crate::non_negative::non_negative_min_max::non_negative_min_max;
-use crate::non_negative::non_negative_operator::{non_negative_operator, non_negative_operators};
+use crate::unsigned::unsigned_min_max::unsigned_min_max;
+use crate::unsigned::unsigned_operators::{unsigned_operator, unsigned_operators};
 use std::ops::{Add, Div, Mul};
 
-macro_rules! non_negative_float {
+macro_rules! unsigned_float {
     ($name: ident, $inner_type: ty) => {
         #[derive(PartialEq, PartialOrd, Copy, Clone, Debug)]
         pub struct $name($inner_type);
@@ -41,11 +41,11 @@ macro_rules! non_negative_float {
             }
         }
 
-        non_negative_min_max!($name);
-        non_negative_operators!($name);
-        non_negative_checked_operators!($name);
+        unsigned_min_max!($name);
+        unsigned_operators!($name);
+        unsigned_checked_operators!($name);
     };
 }
 
-non_negative_float!(NonNegativeF32, f32);
-non_negative_float!(NonNegativeF64, f64);
+unsigned_float!(UF32, f32);
+unsigned_float!(UF64, f64);

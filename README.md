@@ -6,15 +6,19 @@ Variants of common types for enforcing invariance.
 
 ## Types
 
-### Non-negative
+### Unsigned
 
 Types that cannot go under `0`. They implement `Add<Self>`, `Mul<Self>`, and `Div<Self>` that just do exactly what their
 underlying types do. `Sub` was not implemented, since underflowing is extremely easy to accidentally do.
 
+The lack of `Sub` is still under consideration, since unsigned integers _do_ implement it. However, it's still unclear
+if we should follow this unsafe implementation out of consistency, or if it's worth having a wrapper around unsigned
+integers that does hides `Sub`.
+
 They implement the [checked operator](#checked-operator-traits) and [bound](#bound-traits) traits.
 
-- `NonNegativeF32`
-- `NonNegativeF64`
+- `UF32`
+- `UF64`
 
 ### Clamped ratio
 

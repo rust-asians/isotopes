@@ -1,4 +1,4 @@
-macro_rules! non_negative_operator {
+macro_rules! unsigned_operator {
     ($type_name: ident, $trait_name: ident, $function_name: ident) => {
         impl $trait_name for $type_name {
             type Output = $type_name;
@@ -10,13 +10,13 @@ macro_rules! non_negative_operator {
     };
 }
 
-macro_rules! non_negative_operators {
+macro_rules! unsigned_operators {
     ($type_name: ident) => {
-        non_negative_operator!($type_name, Add, add);
-        non_negative_operator!($type_name, Mul, mul);
-        non_negative_operator!($type_name, Div, div);
+        unsigned_operator!($type_name, Add, add);
+        unsigned_operator!($type_name, Mul, mul);
+        unsigned_operator!($type_name, Div, div);
     };
 }
 
-pub(super) use non_negative_operator;
-pub(super) use non_negative_operators;
+pub(super) use unsigned_operator;
+pub(super) use unsigned_operators;

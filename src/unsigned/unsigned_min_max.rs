@@ -1,4 +1,4 @@
-macro_rules! non_negative_min_max{
+macro_rules! unsigned_min_max{
     ($type_name: ident) => {
         impl Min for $type_name {
             fn min() -> Self {
@@ -14,4 +14,4 @@ macro_rules! non_negative_min_max{
     };
 }
 
-pub(super) use non_negative_min_max;
+pub(super) use unsigned_min_max;
