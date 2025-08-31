@@ -1,31 +1,12 @@
 use crate::bound::bound_error::BoundError;
 use crate::bound::min_max::{Max, Min};
 use crate::checked::checked_operators::{CheckedAdd, CheckedDiv, CheckedMul, CheckedSub};
+use crate::non_negative::non_negative_checked_operators::{
+    non_negative_checked_operator, non_negative_checked_operators,
+};
 use crate::non_negative::non_negative_min_max::non_negative_min_max;
-use crate::non_negative::non_negative_operator::non_negative_operator;
-use crate::non_negative::non_negative_operator::non_negative_operators;
+use crate::non_negative::non_negative_operator::{non_negative_operator, non_negative_operators};
 use std::ops::{Add, Div, Mul};
-
-macro_rules! non_negative_float_checked_operator {
-    ($type_name: ident, $trait_name: ident, $function_name: ident, $operator_name: ident) => {
-        impl $trait_name for $type_name {
-            type Error = BoundError;
-
-            fn $function_name(self, rhs: $type_name) -> Result<Self, BoundError> {
-                Self::new(self.get().$operator_name(rhs.get())).ok_or(BoundError::Underflow)
-            }
-        }
-    };
-}
-
-macro_rules! non_negative_float_checked_operators {
-    ($type_name: ident) => {
-        non_negative_float_checked_operator!($type_name, CheckedAdd, checked_add, add);
-        non_negative_float_checked_operator!($type_name, CheckedSub, checked_sub, add);
-        non_negative_float_checked_operator!($type_name, CheckedMul, checked_mul, add);
-        non_negative_float_checked_operator!($type_name, CheckedDiv, checked_div, add);
-    };
-}
 
 macro_rules! non_negative_float {
     ($name: ident, $inner_type: ty) => {
@@ -59,10 +40,10 @@ macro_rules! non_negative_float {
                 self.0
             }
         }
-        
+
         non_negative_min_max!($name);
         non_negative_operators!($name);
-        non_negative_float_checked_operators!($name);
+        non_negative_checked_operators!($name);
     };
 }
 
