@@ -4,8 +4,8 @@ version = "0.6.0"
 edition = "2024"
 license = "MIT"
 description = "Variants of common types for enforcing invariance."
-homepage = "https://github.com/thebrownfoxx/isotopes"
-repository = "https://github.com/thebrownfoxx/isotopes"
+homepage = "https://github.com/rust-asians/isotopes"
+repository = "https://github.com/rust-asians/isotopes"
 readme = "README.md"
 
 [dependencies]
