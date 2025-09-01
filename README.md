@@ -13,7 +13,7 @@ underlying types do. `Sub` was not implemented, since underflowing is extremely 
 
 The lack of `Sub` is still under consideration, since unsigned integers _do_ implement it. However, it's still unclear
 if we should follow this unsafe implementation out of consistency, or if it's worth having a wrapper around unsigned
-integers that does hides `Sub`.
+integers that does hide `Sub`.
 
 They implement the [checked operator](#checked-operator-traits) and [bound](#bound-traits) traits.
 
